@@ -1,0 +1,44 @@
+{% set name = "pyobjc-framework-libdispatch" %}
+{% set version = "10.3.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyobjc_framework_libdispatch-{{ version }}.tar.gz
+  sha256: f5c3475498cb32f54d75e21952670e4a32c8517fb2db2e90869f634edc942446
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.8
+    - setuptools
+    - wheel
+    - pip
+  run:
+    - python >=3.8
+    - pyobjc-core >=10.3.1
+    - pyobjc-framework-cocoa >=10.3.1
+
+test:
+  imports:
+    - pyobjc_framework_libdispatch
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ronaldoussoren/pyobjc
+  summary: Wrappers for libdispatch on macOS
+  license: MIT
+  license_file: License.txt
+
+extra:
+  recipe-maintainers:
+    - AddYourGitHubIdHere
