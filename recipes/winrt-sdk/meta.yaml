@@ -1,0 +1,40 @@
+{% set name = "winrt-sdk" %}
+{% set version = "2.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/winrt_sdk-{{ version }}.tar.gz
+  sha256: e80f093d62693ff95de5994fa99d4a14203712b074740c20b05a426dc9792f7a
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.9,<3.13
+    - setuptools
+    - pip
+  run:
+    - python >=3.9,<3.13
+
+test:
+  imports:
+    - winrt_sdk
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  summary: Windows Runtime SDK for Python header files
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - AddYourGitHubIdHere
