@@ -1,0 +1,44 @@
+{% set name = "winrt-runtime" %}
+{% set version = "2.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/winrt_runtime-{{ version }}.tar.gz
+  sha256: fc9aeea4ab4ddee143fd0aea656040ab7843a440895106314ecaff78a77fd716
+
+build:
+  skip: true  # [py>=313]
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - python >=3.9,<3.13
+    - setuptools
+    - winrt-sdk
+    - pip
+  run:
+    - python >=3.9,<3.13
+
+test:
+  imports:
+    - winrt_runtime
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  summary: Python projection of Windows Runtime (WinRT) APIs
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - AddYourGitHubIdHere
