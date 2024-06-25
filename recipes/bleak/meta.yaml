@@ -1,0 +1,56 @@
+{% set name = "bleak" %}
+{% set version = "0.22.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bleak-{{ version }}.tar.gz
+  sha256: 09010c0f4bd843e7dcaa1652e1bfb2450ce690da08d4c6163f0723aaa986e9fe
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.8,<3.13
+    - poetry-core
+    - pip
+  run:
+    - python >=3.8,<3.13
+    - async-timeout >=3.0.0,<5
+    - typing-extensions >=4.7.0
+    - pyobjc-core >=10.0.0,<11.0.0
+    - pyobjc-framework-corebluetooth >=10.0.0,<11.0.0
+    - pyobjc-framework-libdispatch >=10.0.0,<11.0.0
+    - bleak-winrt >=1.2.0,<2.0.0
+    - winrt-runtime >=2.0.0,<3.0.0
+    - winrt-windows.devices.bluetooth >=2.0.0,<3.0.0
+    - winrt-windows.devices.bluetooth.advertisement >=2.0.0,<3.0.0
+    - winrt-windows.devices.bluetooth.genericattributeprofile >=2.0.0,<3.0.0
+    - winrt-windows.devices.enumeration >=2.0.0,<3.0.0
+    - winrt-windows.foundation >=2.0.0,<3.0.0
+    - winrt-windows.foundation.collections >=2.0.0,<3.0.0
+    - winrt-windows.storage.streams >=2.0.0,<3.0.0
+    - dbus-fast >=1.83.0,<3
+
+test:
+  imports:
+    - bleak
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/hbldh/bleak
+  summary: Bluetooth Low Energy platform Agnostic Klient
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - AddYourGitHubIdHere
