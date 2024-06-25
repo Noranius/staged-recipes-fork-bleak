@@ -1,0 +1,45 @@
+{% set name = "winrt-windows.devices.bluetooth.genericattributeprofile" %}
+{% set version = "2.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/winrt_windows_devices_bluetooth_genericattributeprofile-{{ version }}.tar.gz
+  sha256: 9b8cea33cf5ee8b864365ceafc49f4d732b0e9a738721f3ccd3438dce928a93f
+
+build:
+  skip: true  # [py>=313]
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - python >=3.9,<3.13
+    - setuptools
+    - winrt-sdk
+    - pip
+  run:
+    - python >=3.9,<3.13
+    - winrt-runtime ==2.1.0
+
+test:
+  imports:
+    - winrt_windows.devices.bluetooth.genericattributeprofile
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  summary: Python projection of Windows Runtime (WinRT) APIs
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - AddYourGitHubIdHere
